@@ -1,0 +1,97 @@
+{
+  "name": "BMAD UI - Agent Methodology Interface",
+  "description": "Cosmic-themed mission control interface for BMAD agent methodology with real-time workflow execution",
+  "type": "fastapi-next-bmad",
+  "structure": {
+    "backend": {
+      "framework": "FastAPI",
+      "python_version": "3.11",
+      "dependencies": [
+        "fastapi",
+        "uvicorn",
+        "websockets",
+        "python-multipart",
+        "pydantic",
+        "python-dotenv",
+        "aiofiles",
+        "watchfiles",
+        "httpx",
+        "PyYAML",
+        "redis",
+        "sqlalchemy"
+      ],
+      "special_features": [
+        "bmad_core_integration",
+        "websocket_real_time",
+        "agent_orchestration",
+        "project_management"
+      ]
+    },
+    "frontend": {
+      "framework": "Next.js 15.4.6",
+      "typescript": true,
+      "dependencies": [
+        "react",
+        "react-dom",
+        "next",
+        "typescript",
+        "@types/react",
+        "@types/node",
+        "tailwindcss",
+        "framer-motion",
+        "lucide-react",
+        "react-hot-toast",
+        "socket.io-client",
+        "zustand",
+        "@radix-ui/react-dialog",
+        "@radix-ui/react-progress",
+        "react-hook-form",
+        "zod"
+      ],
+      "theme": "cosmic-mission-control",
+      "special_features": [
+        "glass_morphism_ui",
+        "space_themed_animations",
+        "matrix_terminal_effects",
+        "real_time_websockets"
+      ]
+    }
+  },
+  "features": {
+    "bmad_integration": true,
+    "ecosystem_agents": true,
+    "real_time_workflow": true,
+    "cosmic_theme": true,
+    "agent_orchestration": true,
+    "project_wizard": true,
+    "websocket_updates": true,
+    "mission_control_ui": true
+  },
+  "bmad_configuration": {
+    "integrates_with_ecosystem": true,
+    "uses_ecosystem_agents": [
+      "project_creator",
+      "feature_builder", 
+      "integration_helper",
+      "debugging_assistant"
+    ],
+    "bmad_roles": ["pm", "architect", "dev", "qa"],
+    "workflow_phases": [
+      "planning_phase",
+      "implementation_phase", 
+      "quality_phase"
+    ]
+  },
+  "ui_theme": {
+    "name": "Cosmic Mission Control",
+    "primary_color": "#00ff41",
+    "style": "space-terminal-matrix",
+    "effects": [
+      "blinking_buttons",
+      "glass_morphism",
+      "animated_starfields",
+      "neon_glow_effects",
+      "terminal_typography"
+    ]
+  }
+}

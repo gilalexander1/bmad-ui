@@ -16,37 +16,36 @@ class BMADCoreIntegration:
     """Integration layer for BMAD Core methodology"""
     
     def __init__(self):
-        self.bmad_core_path = Path(__file__).parent / "../bmad-core"
+        # Use the ecosystem's structure, not a copied bmad-core
         self.ecosystem_root = Path(__file__).parent / "../../.."
         self.ecosystem_config_path = self.ecosystem_root / ".bmad-core" / "core-config.yaml"
+        self.ecosystem_agents_path = self.ecosystem_root / "agents"
+        self.ecosystem_infrastructure = self.ecosystem_root / "infrastructure"
+        
         self.config = {}
         self.ecosystem_config = {}
-        self.agents = {}
+        self.ecosystem_agents = {}
         self.workflows = {}
         self.templates = {}
-        self.custom_agents = {}
         
     async def initialize(self):
-        """Initialize BMAD Core integration"""
+        """Initialize BMAD Core integration with Gil's ecosystem"""
         try:
             await self._load_ecosystem_config()
-            await self._load_core_config()
             await self._load_ecosystem_agents()
-            await self._load_agents()
-            await self._load_workflows() 
+            await self._load_workflows()
             await self._load_templates()
             await self._setup_ecosystem_integration()
             
-            print("✅ BMAD Core integration initialized successfully")
+            print("✅ BMAD-UI successfully integrated with Gil's ecosystem")
             print(f"🌟 Ecosystem: {self.ecosystem_config.get('ecosystem_name', 'gil-dev-ecosystem')}")
-            print(f"📂 Core Path: {self.bmad_core_path}")
-            print(f"🎯 BMAD Agents: {len(self.agents)}")
-            print(f"🤖 Custom Agents: {len(self.custom_agents)}")
+            print(f"📂 Ecosystem Root: {self.ecosystem_root}")
+            print(f"🤖 Ecosystem Agents: {len(self.ecosystem_agents)}")
             print(f"🔄 Workflows: {len(self.workflows)}")
             print(f"📋 Templates: {len(self.templates)}")
             
         except Exception as e:
-            print(f"❌ Failed to initialize BMAD Core: {str(e)}")
+            print(f"❌ Failed to initialize ecosystem integration: {str(e)}")
             raise
     
     async def _load_ecosystem_config(self):
@@ -75,14 +74,14 @@ class BMADCoreIntegration:
             }
     
     async def _load_ecosystem_agents(self):
-        """Load Gil's custom agents from ecosystem config"""
+        """Load Gil's ecosystem agents"""
         if not self.ecosystem_config:
             return
             
-        # Load BMAD agents configuration
+        # Load BMAD agents configuration from ecosystem
         bmad_agents = self.ecosystem_config.get("bmad_agents", {})
         for agent_id, agent_config in bmad_agents.items():
-            self.custom_agents[agent_id] = {
+            self.ecosystem_agents[agent_id] = {
                 "id": agent_id,
                 "name": agent_config.get("role", agent_id.upper()),
                 "handler": agent_config.get("handler", "unknown"),
@@ -90,67 +89,58 @@ class BMADCoreIntegration:
                 "responsibilities": agent_config.get("responsibilities", []),
                 "outputs": agent_config.get("outputs", []),
                 "status": "available",
-                "ecosystem_agent": True
+                "ecosystem_agent": True,
+                "agent_path": self.ecosystem_agents_path / agent_config.get("handler", agent_id)
             }
         
-        # Load command references for custom agents
+        # Load command references for ecosystem agents
         command_refs = self.ecosystem_config.get("command_reference", {})
         for agent_handler, command_info in command_refs.items():
             # Find corresponding agent
-            for agent in self.custom_agents.values():
+            for agent in self.ecosystem_agents.values():
                 if agent["handler"] == agent_handler:
                     agent["cli_command"] = command_info.get("cli", "")
                     agent["description"] = command_info.get("description", "")
+                    agent["agent_script"] = self.ecosystem_agents_path / agent_handler / f"{agent_handler}.py"
                     break
     
-    async def _load_agents(self):
-        """Load available BMAD agents"""
-        agents_path = self.bmad_core_path / "agents"
-        if agents_path.exists():
-            for agent_file in agents_path.glob("*.md"):
-                agent_name = agent_file.stem
-                with open(agent_file, 'r') as f:
-                    content = f.read()
-                    
-                self.agents[agent_name] = {
-                    "name": agent_name.upper().replace('-', ' '),
-                    "file": str(agent_file),
-                    "content": content,
-                    "status": "available",
-                    "capabilities": self._extract_capabilities(content)
-                }
-    
     async def _load_workflows(self):
-        """Load available BMAD workflows"""
-        workflows_path = self.bmad_core_path / "workflows"
-        if workflows_path.exists():
-            for workflow_file in workflows_path.glob("*.yaml"):
-                workflow_name = workflow_file.stem
-                with open(workflow_file, 'r') as f:
-                    workflow_config = yaml.safe_load(f)
-                
-                self.workflows[workflow_name] = {
-                    "name": workflow_name.replace('-', ' ').title(),
-                    "config": workflow_config,
-                    "file": str(workflow_file),
-                    "type": self._determine_workflow_type(workflow_name)
-                }
+        """Load ecosystem workflow integration patterns"""
+        # Use ecosystem workflow integration from config
+        workflow_integration = self.ecosystem_config.get("workflow_integration", {})
+        
+        for phase_name, phase_config in workflow_integration.items():
+            self.workflows[phase_name] = {
+                "name": phase_name.replace('_', ' ').title(),
+                "bmad_agents": phase_config.get("bmad_agents", []),
+                "custom_agents": phase_config.get("custom_agents", []),
+                "outputs": phase_config.get("outputs", []),
+                "coordination": phase_config.get("coordination", ""),
+                "type": "ecosystem_integration"
+            }
     
     async def _load_templates(self):
-        """Load BMAD templates"""
-        templates_path = self.bmad_core_path / "templates"
+        """Load ecosystem templates"""
+        # Load from infrastructure templates
+        templates_path = self.ecosystem_infrastructure / "templates"
         if templates_path.exists():
-            for template_file in templates_path.glob("*.yaml"):
-                template_name = template_file.stem
-                with open(template_file, 'r') as f:
-                    template_config = yaml.safe_load(f)
-                
-                self.templates[template_name] = {
-                    "name": template_name.replace('-tmpl', '').replace('-', ' ').title(),
-                    "config": template_config,
-                    "file": str(template_file),
-                    "category": self._determine_template_category(template_name)
-                }
+            for template_dir in templates_path.iterdir():
+                if template_dir.is_dir():
+                    template_json = template_dir / "template.json"
+                    if template_json.exists():
+                        try:
+                            with open(template_json, 'r') as f:
+                                template_config = json.load(f)
+                            
+                            self.templates[template_dir.name] = {
+                                "name": template_config.get("name", template_dir.name),
+                                "description": template_config.get("description", ""),
+                                "type": template_config.get("type", "unknown"),
+                                "config": template_config,
+                                "path": str(template_dir)
+                            }
+                        except Exception as e:
+                            print(f"⚠️ Failed to load template {template_dir.name}: {e}")
     
     async def _setup_ecosystem_integration(self):
         """Setup integration with Gil's dev ecosystem"""
@@ -224,15 +214,18 @@ class BMADCoreIntegration:
         return self.config.get("version", "unknown")
     
     async def get_available_agents(self) -> List[Dict]:
-        """Get list of available agents"""
+        """Get list of available ecosystem agents"""
         return [
             {
                 "id": agent_id,
                 "name": agent["name"],
-                "capabilities": agent["capabilities"],
-                "status": agent["status"]
+                "role": agent["role"],
+                "handler": agent["handler"],
+                "responsibilities": agent["responsibilities"],
+                "status": agent["status"],
+                "ecosystem_agent": True
             }
-            for agent_id, agent in self.agents.items()
+            for agent_id, agent in self.ecosystem_agents.items()
         ]
     
     async def get_available_workflows(self) -> List[Dict]:

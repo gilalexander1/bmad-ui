@@ -1,0 +1,52 @@
+name: bmad-ui
+type: fullstack-webapp
+description: "Enhanced BMAD UI - A cosmic-themed, user-friendly frontend for the BMAD agent methodology with real-time workflow execution, project creation wizards, and stunning visual effects"
+version: "2.0.0"
+template: fastapi-next
+
+metadata:
+  theme: cosmic-space
+  primary_color: "#00ff41"
+  ui_style: glass-morphism
+  features:
+    - project-creation-wizard
+    - bmad-workflow-execution
+    - real-time-agent-updates
+    - websocket-integration
+    - terminal-streaming
+    - file-preview-system
+    - cosmic-animations
+
+architecture:
+  frontend:
+    framework: Next.js 15.4.6
+    language: TypeScript
+    styling: Tailwind CSS + Custom Glass Effects
+    key_components:
+      - ProjectCreationWizard
+      - BMADWorkflow
+      - AgentTeamManager
+      - RealTimeTerminal
+      - FilePreviewSystem
+      - CosmicDashboard
+  
+  backend:
+    framework: FastAPI
+    features:
+      - WebSocket real-time updates
+      - BMAD core integration
+      - File system monitoring
+      - Agent orchestration
+      - Project template management
+
+development:
+  ports:
+    frontend: 3000
+    backend: 8000
+    websocket: 8001
+  
+  commands:
+    dev: "npm run dev"
+    build: "npm run build"
+    start: "npm start"
+    backend: "uvicorn main:app --reload"

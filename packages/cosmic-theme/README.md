@@ -2,6 +2,8 @@
 
 Reusable Tailwind preset and CSS utilities to apply the BMAD “cosmic/matrix” UI across projects.
 
+NPM package (public): `cosmic-tailwind-theme`
+
 ## Install (monorepo/local path)
 
 - Copy this folder to your repo under `packages/cosmic-theme` (already done here), or publish as a private package later.
@@ -10,7 +12,7 @@ Reusable Tailwind preset and CSS utilities to apply the BMAD “cosmic/matrix”
 
 1) Tailwind preset
 
-- In your app’s `tailwind.config.js`:
+- In your app’s `tailwind.config.js` (monorepo path example):
 
 ```js
 // tailwind.config.js
@@ -23,7 +25,7 @@ module.exports = {
 };
 ```
 
-2) CSS utilities
+2) CSS utilities (monorepo path example)
 
 - Import CSS once (e.g., in `src/app/globals.css` or main CSS):
 
@@ -33,7 +35,28 @@ module.exports = {
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap');
 ```
 
-3) Example usage
+3) Using the published npm package
+
+Install:
+```bash
+npm install cosmic-tailwind-theme
+```
+
+Config (npm):
+```js
+// tailwind.config.js
+module.exports = {
+  content: ['./src/**/*.{js,ts,jsx,tsx,mdx}'],
+  presets: [require('cosmic-tailwind-theme')],
+}
+```
+
+CSS import (npm):
+```css
+@import 'cosmic-tailwind-theme/css/cosmic.css';
+```
+
+4) Example usage
 
 - Apply background and stars to a container:
 

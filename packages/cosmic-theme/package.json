@@ -1,0 +1,21 @@
+{
+  "name": "@bmad/cosmic-theme",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Reusable Tailwind preset and CSS utilities for the BMAD cosmic UI theme.",
+  "main": "tailwind.preset.cjs",
+  "types": "",
+  "license": "UNLICENSED",
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "exports": {
+    ".": {
+      "default": "./tailwind.preset.cjs"
+    },
+    "./css": {
+      "default": "./css/cosmic.css"
+    }
+  }
+}
+

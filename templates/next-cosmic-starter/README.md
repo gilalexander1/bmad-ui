@@ -17,6 +17,23 @@ npm install
 
 If using outside the monorepo, publish `@bmad/cosmic-theme` or replace paths with your installed package path.
 
+Alternatively, install the published npm package:
+
+```bash
+npm install glowy-space-theme
+```
+
+Tailwind:
+```js
+// tailwind.config.js
+module.exports = { presets: [require('glowy-space-theme')], /* ... */ }
+```
+
+CSS:
+```css
+@import 'glowy-space-theme/css/cosmic.css';
+```
+
 4) Run dev:
 
 ```bash

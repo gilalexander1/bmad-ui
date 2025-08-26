@@ -2,7 +2,7 @@
 
 Reusable Tailwind preset and CSS utilities to apply the BMAD “cosmic/matrix” UI across projects.
 
-NPM package (public): `cosmic-tailwind-theme`
+NPM package (public): `glowy-space-theme`
 
 ## Install (monorepo/local path)
 
@@ -39,7 +39,7 @@ module.exports = {
 
 Install:
 ```bash
-npm install cosmic-tailwind-theme
+npm install glowy-space-theme
 ```
 
 Config (npm):
@@ -47,13 +47,13 @@ Config (npm):
 // tailwind.config.js
 module.exports = {
   content: ['./src/**/*.{js,ts,jsx,tsx,mdx}'],
-  presets: [require('cosmic-tailwind-theme')],
+  presets: [require('glowy-space-theme')],
 }
 ```
 
 CSS import (npm):
 ```css
-@import 'cosmic-tailwind-theme/css/cosmic.css';
+@import 'glowy-space-theme/css/cosmic.css';
 ```
 
 4) Example usage

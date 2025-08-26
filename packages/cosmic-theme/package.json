@@ -1,5 +1,5 @@
 {
-  "name": "cosmic-tailwind-theme",
+  "name": "glowy-space-theme",
   "version": "0.1.0",
   "description": "Reusable Tailwind preset and CSS utilities for the BMAD cosmic UI theme.",
   "main": "tailwind.preset.cjs",

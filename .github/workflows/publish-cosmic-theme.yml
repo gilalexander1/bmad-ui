@@ -1,0 +1,31 @@
+name: Publish Cosmic Theme
+
+on:
+  push:
+    tags:
+      - 'cosmic-theme-v*'
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Publish @bmad/cosmic-theme
+        working-directory: packages/cosmic-theme
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          npm whoami || true
+          npm publish --access public
+

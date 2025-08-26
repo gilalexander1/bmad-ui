@@ -1,11 +1,25 @@
 {
   "name": "@bmad/cosmic-theme",
   "version": "0.1.0",
-  "private": true,
   "description": "Reusable Tailwind preset and CSS utilities for the BMAD cosmic UI theme.",
   "main": "tailwind.preset.cjs",
   "types": "",
   "license": "UNLICENSED",
+  "files": [
+    "css",
+    "tailwind.preset.cjs",
+    "README.md",
+    "package.json"
+  ],
+  "keywords": ["tailwind", "theme", "cosmic", "matrix", "glass"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gilalexander1/bmad-ui.git",
+    "directory": "packages/cosmic-theme"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "sideEffects": [
     "**/*.css"
   ],
@@ -18,4 +32,3 @@
     }
   }
 }
-

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { 
   ChevronRight, 
@@ -152,9 +152,35 @@ export default function ProjectCreationWizard({ onComplete }: ProjectCreationWiz
     setValue('objectives', newObjectives)
   }
 
-  const onSubmit = (data: ProjectData) => {
+  const onSubmit = async (data: ProjectData) => {
     console.log('Mission Parameters Confirmed:', data)
-    onComplete()
+    
+    try {
+      // Call deployment API
+      const response = await fetch('http://localhost:8001/api/projects/deploy', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+      })
+      
+      if (response.ok) {
+        const deploymentResult = await response.json()
+        console.log('🚀 Deployment initiated:', deploymentResult)
+        
+        // Show success feedback
+        alert(`🚀 MISSION DEPLOYED!\n\nDeployment ID: ${deploymentResult.deployment_id}\nProject: ${deploymentResult.project_name}\nEstimated Completion: ${deploymentResult.estimated_completion}`)
+        
+        onComplete()
+      } else {
+        console.error('Deployment failed:', response.status)
+        alert('❌ Deployment failed. Please check system status and try again.')
+      }
+    } catch (error) {
+      console.error('Error during deployment:', error)
+      alert('⚠️ Connection error. Please ensure backend is running and try again.')
+    }
   }
 
   const stepVariants = {
